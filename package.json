@@ -1,0 +1,31 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "express-formidable": "^1.2.0",
+    "faker": "^4.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.7.1",
+    "mongoose-slug-updater": "^3.3.0",
+    "nodemon": "^2.0.20",
+    "path": "^0.12.7",
+    "router": "^1.3.7",
+    "stripe": "^10.15.0"
+  },
+  "devDependencies": {
+    "prettier": "2.7.1"
+  }
+}
