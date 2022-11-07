@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path')
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const indexRoute = require('./routes/index');
@@ -18,15 +19,19 @@ connectDB();
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+app.use(express.static(path.join(__dirname, "public")));
+
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
+app.use(cookieParser());
+
 
 app.use('/',indexRoute);
-app.use('/api/auth',authRoute);
-app.use('/api/users',userRoute);
-app.use('/api/products',productRoute);
-app.use('/api/users/cart',cartRoute);
-app.use('/api/users/orders',orderRoute);
+app.use('/auth',authRoute);
+app.use('/users',userRoute);
+app.use('/users/products',productRoute);
+app.use('/users/cart',cartRoute);
+app.use('/users/orders',orderRoute);
 
 
 app.listen(process.env.PORT, (req, res) => {

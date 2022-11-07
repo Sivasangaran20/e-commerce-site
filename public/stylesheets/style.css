@@ -1,0 +1,8 @@
+body{
+    background-color: darkgray;
+}
+a{
+    padding: 10px;
+    float: right;
+    text-decoration: none;
+}

@@ -3,18 +3,19 @@ const router = require('./auth');
 
 
 const verifyToken = (req,res,next)=>{
-    const authHeader = req.headers.token;
-    if(authHeader){
-        const token = authHeader.split(" ")[1];
-        jwt.verify(token, process.env.JWT_SEC,(err,user)=>{
-            if(err)
-                return res.status(401).json('token not valid');
-                req.user = user;
-                next();        
-            });
-            } else { 
-                return res.status(401).json('you are not authenticated')
-        }   
+    const token = req.cookies.token;
+  if (!token)
+    return res.status(401).send("Access denied...No token provided...");
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SEC);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    // console.log("err", er);
+    //Incase of expired jwt or invalid token kill the token and clear the cookie
+    res.clearCookie("token");
+    return res.status(400).send(er.message);
+  }
 };
 
 const verifyTokenandAuthorization = (req,res,next)=>{

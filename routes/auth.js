@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
 
     try {
         const savedUser = await newUser.save();
-        return res.status(201).json(savedUser)
+        return res.status(201).render("signin")
     } catch (err) {
         return res.status(500).json(err);
     }
@@ -48,7 +48,7 @@ router.post('/login', async (req, res) => {
                 isAdmin: user.isAdmin,
             }, process.env.JWT_SEC, { expiresIn: '3d' });
             
-            res.status(200).json({user, accessToken });
+            res.status(200).cookie("access_token",accessToken,{httpOnly:true, secure:process.env.JWT_SEC === "msss"}).json({message:"Login successfully",accessToken:accessToken}).render("index");
         }
     } catch (err) {
         res.status(500).json(err)
