@@ -43,17 +43,22 @@ router.post('/login', async (req, res) => {
             res.status(401).json('wrong credentials');
         }
         else {
-            const accessToken = jwt.sign({
+            const token = jwt.sign({
                 id: user._id,
                 isAdmin: user.isAdmin,
-            }, process.env.JWT_SEC, { expiresIn: '3d' });
+            }, process.env.JWT_SEC, { expiresIn: "1h" })
             
-            res.status(200).cookie("access_token",accessToken,{httpOnly:true, secure:process.env.JWT_SEC === "msss"}).json({message:"Login successfully",accessToken:accessToken}).render("index");
+            return res.status(200).cookie("token",token,{httpOnly:true})
+            .render("products");
         }
     } catch (err) {
         res.status(500).json(err)
     }
+});
 
+router.put('/logout',async(req,res)=>{
+    res.cookie('jwt','',{maxAge:1});
+    res.render("index")
 })
 
 module.exports = router
